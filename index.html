@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dr. Sailipi Gowlikar — Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink:      #0f1f2e;
+      --paper:    #f7f4ef;
+      --teal:     #1a7a72;
+      --teal-lt:  #e8f5f4;
+      --coral:    #d45f45;
+      --gold:     #c9a84c;
+      --muted:    #5a6672;
+      --border:   #ddd8cf;
+      --card:     #ffffff;
+      --shadow-sm:0 2px 10px rgba(15,31,46,.07);
+      --shadow-md:0 6px 28px rgba(15,31,46,.12);
+      --r:        10px;
+      --serif:    'Cormorant Garamond', Georgia, serif;
+      --sans:     'Outfit', system-ui, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--sans); background: var(--paper); color: var(--ink); line-height: 1.7; overflow-x: hidden; }
+    a { color: inherit; text-decoration: none; }
+
+    /* ── SPLASH ── */
+    #splash {
+      position: fixed; inset: 0; z-index: 9999;
+      background: var(--ink);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      pointer-events: none;
+    }
+    #splash-sub {
+      font-family: var(--sans); font-size: clamp(.7rem,2vw,.9rem);
+      letter-spacing: .25em; text-transform: uppercase;
+      color: var(--teal); opacity: 0;
+      animation: fade-up .5s ease 0.6s forwards;
+      margin-bottom: .9rem;
+    }
+    #splash-name {
+      font-family: var(--serif); font-size: clamp(2rem,7vw,5rem);
+      color: var(--paper); letter-spacing: .04em;
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 0 .28em;
+    }
+    #splash-name .word { overflow: hidden; display: inline-block; }
+    #splash-name .word span {
+      display: inline-block; opacity: 0;
+      transform: translateY(60px) rotate(3deg);
+      animation: char-rise .55s cubic-bezier(.22,1,.36,1) forwards;
+    }
+    #splash-bar {
+      width: 0; height: 2px; margin-top: 1.1rem;
+      background: linear-gradient(90deg, var(--teal), var(--coral));
+      animation: bar-grow .55s ease 2.1s forwards;
+    }
+    #splash.out { animation: splash-out .7s ease 2.7s forwards; }
+
+    @keyframes char-rise { to { opacity:1; transform:none; } }
+    @keyframes fade-up   { to { opacity:1; } }
+    @keyframes bar-grow  { to { width: min(420px,80vw); } }
+    @keyframes splash-out{ to { opacity:0; visibility:hidden; } }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top:0; left:0; right:0; z-index:200; height:62px;
+      background: rgba(247,244,239,.93); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 5vw;
+    }
+    .brand { font-family: var(--serif); font-size: 1.2rem; font-weight:600; color:var(--ink); }
+    .brand span { color: var(--teal); }
+    .nav-links { display:flex; gap:1.8rem; list-style:none; }
+    .nav-links a { font-size:.75rem; font-weight:500; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); transition:color .2s; }
+    .nav-links a:hover { color: var(--teal); }
+
+    /* ── MAIN ── */
+    main { padding-top:62px; opacity:0; animation: fade-up .8s ease 3.2s forwards; }
+
+    /* ── SHARED ── */
+    section { padding: 7vh 5vw; }
+    .lbl { font-size:.72rem; font-weight:600; letter-spacing:.2em; text-transform:uppercase; color:var(--teal); margin-bottom:.4rem; }
+    .lbl-gold { color: var(--gold); }
+    .stitle { font-family:var(--serif); font-size:clamp(1.7rem,3.5vw,2.5rem); font-weight:600; line-height:1.15; color:var(--ink); }
+    .stitle-lt { color: #f0ede8; }
+    .rule { width:44px; height:3px; border-radius:2px; background:var(--coral); margin:.5rem 0 2.5rem; }
+    .rule-teal { background: var(--teal); }
+    .rule-gold { background: var(--gold); }
+    .rule-center { margin-left:auto; margin-right:auto; }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: calc(100vh - 62px);
+      display: grid; grid-template-columns: 1fr auto;
+      align-items: center; gap: 4rem; padding: 8vh 5vw;
+      background: var(--ink); position: relative; overflow: hidden;
+    }
+    #hero::before {
+      content:''; position:absolute; width:700px; height:700px; border-radius:50%;
+      background: radial-gradient(circle,rgba(26,122,114,.18) 0%,transparent 70%);
+      top:-150px; right:-150px; pointer-events:none;
+    }
+    #hero::after {
+      content:''; position:absolute; width:450px; height:450px; border-radius:50%;
+      background: radial-gradient(circle,rgba(212,95,69,.12) 0%,transparent 70%);
+      bottom:-80px; left:8%; pointer-events:none;
+    }
+    .hero-l { position:relative; z-index:1; }
+    .hero-eyebrow {
+      display:inline-flex; align-items:center; gap:.55rem;
+      background:rgba(26,122,114,.2); border:1px solid rgba(26,122,114,.4);
+      color:#7ececa; font-size:.75rem; font-weight:500;
+      letter-spacing:.09em; text-transform:uppercase;
+      padding:.32rem .9rem; border-radius:100px; margin-bottom:1.4rem;
+    }
+    .hero-eyebrow::before { content:'◉'; font-size:.5rem; }
+    .hero-name { font-family:var(--serif); font-size:clamp(2.8rem,6.5vw,5rem); font-weight:700; line-height:1.05; color:#f0ede8; margin-bottom:1rem; }
+    .hero-name em { font-style:italic; color:#7ececa; }
+    .hero-badges { display:flex; flex-wrap:wrap; gap:.55rem; margin-bottom:1.4rem; }
+    .badge { background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.14); color:#c4bfb8; font-size:.75rem; padding:.28rem .8rem; border-radius:6px; }
+    .hero-bio { font-size:.97rem; color:#8e9baa; max-width:52ch; line-height:1.85; margin-bottom:2rem; }
+    .hero-bio strong { color:#7ececa; font-weight:500; }
+    .btn-row { display:flex; gap:.8rem; flex-wrap:wrap; }
+    .btn { display:inline-flex; align-items:center; gap:.45rem; padding:.7rem 1.6rem; border-radius:6px; font-size:.83rem; font-weight:500; letter-spacing:.05em; cursor:pointer; transition:transform .15s,box-shadow .15s; }
+    .btn:hover { transform:translateY(-2px); }
+    .btn-teal { background:var(--teal); color:#fff; }
+    .btn-teal:hover { box-shadow:0 6px 24px rgba(26,122,114,.4); }
+    .btn-ghost { border:1.5px solid rgba(255,255,255,.28); color:#c4bfb8; }
+    .btn-ghost:hover { background:rgba(255,255,255,.08); }
+    .hero-r { position:relative; z-index:1; }
+    .av-wrap { width:clamp(170px,22vw,280px); aspect-ratio:1; position:relative; }
+    .av-ring { position:absolute; inset:-16px; border-radius:50%; border:2px dashed rgba(26,122,114,.5); animation:spin 25s linear infinite; }
+    .av-ring2 { position:absolute; inset:-30px; border-radius:50%; border:1px dashed rgba(201,168,76,.22); animation:spin 40s linear infinite reverse; }
+    .av-circle { width:100%; height:100%; border-radius:50%; background:linear-gradient(145deg,var(--teal) 0%,#0d4f4a 100%); display:flex; align-items:center; justify-content:center; font-family:var(--serif); font-size:clamp(3rem,5vw,4.5rem); font-weight:600; color:#fff; box-shadow:0 16px 60px rgba(26,122,114,.4); }
+    .av-tag { position:absolute; bottom:-10px; left:50%; transform:translateX(-50%); background:var(--coral); color:#fff; font-size:.7rem; font-weight:600; letter-spacing:.08em; text-transform:uppercase; padding:.25rem .8rem; border-radius:100px; white-space:nowrap; box-shadow:0 4px 12px rgba(212,95,69,.4); }
+    @keyframes spin { to { transform:rotate(360deg); } }
+
+    /* ── STATS BAR ── */
+    #stats { background:var(--teal); padding:2rem 5vw; display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; text-align:center; }
+    .st-num { font-family:var(--serif); font-size:clamp(1.8rem,3.5vw,2.6rem); font-weight:700; color:#fff; line-height:1; display:block; }
+    .st-lbl { font-size:.75rem; color:rgba(255,255,255,.7); margin-top:.3rem; }
+
+    /* ── ABOUT ── */
+    #about { background:var(--paper); }
+    .about-grid { display:grid; grid-template-columns:1.1fr 1fr; gap:4rem; align-items:start; }
+    .about-body p { color:var(--muted); margin-bottom:1rem; font-size:.96rem; }
+    .about-body p strong { color:var(--ink); font-weight:600; }
+    .about-body p em { color:var(--teal); font-style:normal; font-weight:500; }
+    .tl-item { display:grid; grid-template-columns:14px 1fr; gap:0 1rem; margin-bottom:1.5rem; }
+    .tl-dot-col { display:flex; flex-direction:column; align-items:center; }
+    .tl-dot { width:14px; height:14px; border-radius:50%; background:var(--teal); flex-shrink:0; box-shadow:0 0 0 3px rgba(26,122,114,.2); }
+    .tl-line { flex:1; width:2px; background:var(--border); margin-top:4px; }
+    .tl-role { font-size:.9rem; font-weight:600; color:var(--ink); }
+    .tl-place { font-size:.8rem; color:var(--muted); }
+    .tl-date { display:inline-block; font-size:.7rem; font-weight:500; background:var(--teal-lt); color:var(--teal); border-radius:100px; padding:.13rem .6rem; margin-top:.2rem; }
+    .exp-head { font-size:.73rem; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--coral); margin-bottom:1.1rem; padding-bottom:.5rem; border-bottom:1px solid var(--border); }
+
+    /* ── SKILLS ── */
+    #skills { background:#f0ece3; }
+    .skills-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; }
+    .sg-head { font-size:.73rem; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--coral); margin-bottom:.9rem; padding-bottom:.4rem; border-bottom:1px solid var(--border); }
+    .tags { display:flex; flex-wrap:wrap; gap:.45rem; }
+    .tag { background:var(--card); border:1px solid var(--border); color:var(--ink); font-size:.79rem; font-weight:500; padding:.3rem .8rem; border-radius:6px; display:flex; align-items:center; gap:.38rem; transition:transform .15s,box-shadow .15s,border-color .15s; }
+    .tag:hover { transform:translateY(-2px); box-shadow:var(--shadow-sm); border-color:var(--teal); }
+    .dot { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
+    .dt { background:var(--teal); } .dc2 { background:var(--coral); } .dg { background:var(--gold); }
+
+    /* ── PROJECT ── */
+    #project { background:var(--ink); }
+    .proj-card { border-radius:var(--r); background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.09); overflow:hidden; }
+    .proj-hdr { background:linear-gradient(130deg,var(--teal) 0%,#0d5954 100%); padding:2.4rem 2.6rem; display:grid; grid-template-columns:1fr auto; align-items:start; gap:1.5rem; }
+    .proj-hdr h3 { font-family:var(--serif); font-size:clamp(1.4rem,3vw,2rem); color:#fff; font-weight:600; line-height:1.2; }
+    .proj-hdr p { color:rgba(255,255,255,.72); font-size:.88rem; margin-top:.5rem; max-width:54ch; }
+    .proj-meta { display:flex; flex-direction:column; gap:.45rem; align-items:flex-end; flex-shrink:0; }
+    .pbadge { background:rgba(255,255,255,.18); color:#fff; font-size:.7rem; font-weight:600; letter-spacing:.08em; text-transform:uppercase; padding:.28rem .8rem; border-radius:100px; white-space:nowrap; }
+    .proj-body { padding:2.4rem 2.6rem; }
+    .proj-cols { display:grid; grid-template-columns:1.1fr 1fr; gap:2.5rem; }
+    .ph4 { font-size:.72rem; font-weight:600; letter-spacing:.15em; text-transform:uppercase; color:var(--gold); margin-bottom:.9rem; }
+    .proj-body p, .proj-body li { font-size:.88rem; color:#8e9baa; line-height:1.8; }
+    .proj-body ul { padding-left:1.1rem; }
+    .proj-body li { margin-bottom:.3rem; }
+    .proj-body li strong { color:#c4bfb8; font-weight:500; }
+    .dc-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:.85rem; margin-top:1rem; }
+    .dcard { background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.09); border-radius:8px; padding:1.1rem; }
+    .dn { font-family:var(--serif); font-size:1.9rem; font-weight:700; color:#7ececa; display:block; line-height:1; }
+    .dl { font-size:.73rem; color:#4e6070; margin-top:.18rem; }
+    .btable { width:100%; border-collapse:collapse; margin-top:.9rem; }
+    .btable th,.btable td { padding:.55rem .75rem; text-align:left; font-size:.82rem; border-bottom:1px solid rgba(255,255,255,.07); }
+    .btable th { color:#4e6070; font-weight:500; font-size:.7rem; letter-spacing:.1em; text-transform:uppercase; }
+    .btable td { color:#a8b5be; }
+    .btable td:last-child { color:#7ececa; font-weight:600; }
+    .chips { display:flex; flex-wrap:wrap; gap:.45rem; margin-top:1rem; }
+    .chip { display:inline-flex; align-items:center; gap:.38rem; background:rgba(26,122,114,.2); border:1px solid rgba(26,122,114,.35); color:#7ececa; font-size:.76rem; font-weight:500; padding:.28rem .8rem; border-radius:100px; }
+    .chip.cr { background:rgba(212,95,69,.15); border-color:rgba(212,95,69,.3); color:#e8987f; }
+
+    /* ── TRIALS ── */
+    #trials { background:var(--paper); }
+    .ttable { width:100%; border-collapse:collapse; font-size:.86rem; }
+    .ttable thead th { background:var(--teal); color:#fff; padding:.75rem 1rem; text-align:left; font-size:.73rem; font-weight:600; letter-spacing:.09em; text-transform:uppercase; }
+    .ttable thead th:first-child { border-radius:8px 0 0 0; }
+    .ttable thead th:last-child  { border-radius:0 8px 0 0; }
+    .ttable tbody tr { border-bottom:1px solid var(--border); transition:background .15s; }
+    .ttable tbody tr:hover { background:var(--teal-lt); }
+    .ttable td { padding:.7rem 1rem; color:var(--muted); }
+    .ttable td:first-child { color:var(--ink); font-weight:500; }
+    .phase { display:inline-block; background:var(--teal-lt); color:var(--teal); font-size:.7rem; font-weight:600; padding:.18rem .6rem; border-radius:100px; }
+
+    /* ── CERTS ── */
+    #certs { background:#f0ece3; }
+    .certs-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(270px,1fr)); gap:1.1rem; }
+    .cert { background:var(--card); border:1px solid var(--border); border-radius:var(--r); padding:1.2rem 1.3rem; box-shadow:var(--shadow-sm); display:flex; gap:.85rem; align-items:flex-start; transition:transform .18s,box-shadow .18s; }
+    .cert:hover { transform:translateY(-3px); box-shadow:var(--shadow-md); }
+    .cert-icon { width:36px; height:36px; border-radius:8px; background:var(--teal-lt); display:flex; align-items:center; justify-content:center; font-size:1.05rem; flex-shrink:0; }
+    .cert-title { font-size:.86rem; font-weight:600; color:var(--ink); line-height:1.4; }
+    .cert-org { font-size:.74rem; color:var(--muted); margin-top:.18rem; }
+
+    /* ── PUBS ── */
+    #pubs { background:var(--paper); }
+    .pub { background:var(--card); border-left:4px solid var(--teal); border-radius:0 var(--r) var(--r) 0; padding:1.2rem 1.5rem; box-shadow:var(--shadow-sm); margin-bottom:1rem; }
+    .pub-title { font-size:.93rem; font-weight:600; color:var(--ink); line-height:1.45; }
+    .pub-jnl { font-size:.79rem; color:var(--teal); margin-top:.3rem; font-style:italic; }
+
+    /* ── CONTACT ── */
+    #contact { background:var(--ink); text-align:center; }
+    #contact p { color:#6e7e8e; max-width:46ch; margin:0 auto 1.8rem; font-size:.93rem; }
+    .contact-cards { display:flex; justify-content:center; gap:1rem; flex-wrap:wrap; }
+    .ccard { background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1); border-radius:var(--r); padding:1rem 1.5rem; display:flex; align-items:center; gap:.75rem; color:#c4bfb8; font-size:.88rem; transition:border-color .2s,background .2s; }
+    .ccard:hover { border-color:var(--teal); background:rgba(26,122,114,.1); }
+    .ccard .ico { font-size:1.2rem; }
+    .ccard strong { display:block; font-size:.7rem; color:#5e7080; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.08rem; }
+
+    /* ── FOOTER ── */
+    footer { background:#08131c; text-align:center; padding:1.1rem; font-size:.73rem; color:#2a3a48; letter-spacing:.06em; }
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:900px){
+      #hero { grid-template-columns:1fr; text-align:center; }
+      .hero-bio { margin:0 auto 2rem; }
+      .hero-badges,.btn-row { justify-content:center; }
+      .hero-r { display:flex; justify-content:center; margin-top:1rem; }
+      .about-grid { grid-template-columns:1fr; }
+      .skills-grid { grid-template-columns:1fr 1fr; }
+      .proj-cols { grid-template-columns:1fr; }
+      .proj-hdr { grid-template-columns:1fr; }
+      .proj-meta { align-items:flex-start; }
+      #stats { grid-template-columns:repeat(2,1fr); }
+    }
+    @media(max-width:580px){
+      .nav-links { display:none; }
+      .skills-grid { grid-template-columns:1fr; }
+      .dc-grid { grid-template-columns:1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- SPLASH -->
+<div id="splash">
+  <div id="splash-sub">Health Informatics · Clinical Research · PharmD</div>
+  <div id="splash-name"></div>
+  <div id="splash-bar"></div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="brand">Dr. S<span>.</span>Gowlikar</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#project">Project</a></li>
+    <li><a href="#trials">Trials</a></li>
+    <li><a href="#certs">Certs</a></li>
+    <li><a href="#pubs">Publications</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<main>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-l">
+    <div class="hero-eyebrow">Open to Clinical Research &amp; Health Informatics Roles</div>
+    <h1 class="hero-name">Dr. Sailipi<br /><em>Gowlikar</em></h1>
+    <div class="hero-badges">
+      <span class="badge">PharmD · JNTU Hyderabad</span>
+      <span class="badge">MS Health Informatics · Franklin University</span>
+      <span class="badge">Columbus, OH</span>
+    </div>
+    <p class="hero-bio">
+      Patient-focused <strong>Clinical Research Coordinator</strong> with 2+ years of FDA-regulated Phase I–IV trial experience across oncology, gastroenterology &amp; ophthalmology — now applying <strong>health informatics &amp; data analytics</strong> skills to real-world healthcare problems in my final year at Franklin University.
+    </p>
+    <div class="btn-row">
+      <a href="#project" class="btn btn-teal">View Capstone Project</a>
+      <a href="#contact" class="btn btn-ghost">Get in Touch</a>
+    </div>
+  </div>
+  <div class="hero-r">
+    <div class="av-wrap">
+      <div class="av-ring"></div>
+      <div class="av-ring2"></div>
+      <div class="av-circle">SG</div>
+      <div class="av-tag">PharmD · MS HI</div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<div id="stats">
+  <div><span class="st-num">2+</span><div class="st-lbl">Years CRC Experience</div></div>
+  <div><span class="st-num">8</span><div class="st-lbl">Clinical Trial Projects</div></div>
+  <div><span class="st-num">2</span><div class="st-lbl">Peer-Reviewed Publications</div></div>
+  <div><span class="st-num">4,546</span><div class="st-lbl">Patient Records Analyzed</div></div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-body">
+      <p class="lbl">About Me</p>
+      <h2 class="stitle">Clinical Expertise Meets<br />Data Science</h2>
+      <div class="rule"></div>
+      <p>I'm a Health Informatics student at <strong>Franklin University</strong>, Columbus, OH, completing my Master's degree (2024–2026) alongside my background as a <em>Doctor of Pharmacy</em> from Jawaharlal Nehru Technological University, Hyderabad.</p>
+      <p>My career spanned <strong>FDA-regulated Phase I–IV clinical trials</strong> across oncology, gastroenterology, and ophthalmology — managing patient recruitment, informed consent, eCRF data entry in Medidata Rave, Oracle Argus, and ArisGlobal, and ensuring full ICH-GCP compliance.</p>
+      <p>In my <strong>final year capstone</strong>, I'm collaborating with a team of 3 students to analyze real dental patient data for <em>HW Dental</em> (four Columbus-area branches), using Python, SQL, Excel, Tableau, and Power BI to surface marketing insights for Medicaid and Spanish-speaking populations.</p>
+      <p>I hold <strong>GCP certification</strong>, IATA dangerous goods training, BLS certification, and Medidata Rave EDC training, and have authored two peer-reviewed clinical pharmacology publications.</p>
+    </div>
+    <div>
+      <div class="exp-head">Professional Experience</div>
+      <div class="tl-item">
+        <div class="tl-dot-col"><div class="tl-dot"></div><div class="tl-line"></div></div>
+        <div>
+          <div class="tl-role">MS Health Informatics — Final Year Capstone</div>
+          <div class="tl-place">Franklin University, Columbus, OH</div>
+          <span class="tl-date">2024 – 2026</span>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot-col"><div class="tl-dot"></div><div class="tl-line"></div></div>
+        <div>
+          <div class="tl-role">Site Coordinator (CRC)</div>
+          <div class="tl-place">LV Prasad Eye Institute / S4 Research, India</div>
+          <span class="tl-date">Feb 2024 – Sep 2024</span>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot-col"><div class="tl-dot"></div><div class="tl-line"></div></div>
+        <div>
+          <div class="tl-role">Clinical Research Coordinator</div>
+          <div class="tl-place">Yashoda Hospital, India</div>
+          <span class="tl-date">Apr 2022 – Jul 2023</span>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot-col"><div class="tl-dot"></div></div>
+        <div>
+          <div class="tl-role">CRC Intern</div>
+          <div class="tl-place">Yashoda Hospital, Secunderabad, India</div>
+          <span class="tl-date">Nov 2021 – Apr 2022</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <p class="lbl">Capabilities</p>
+  <h2 class="stitle">Skills &amp; Tools</h2>
+  <div class="rule rule-gold"></div>
+  <div class="skills-grid">
+    <div>
+      <div class="sg-head">Data &amp; Analytics</div>
+      <div class="tags">
+        <span class="tag"><span class="dot dt"></span>Python</span>
+        <span class="tag"><span class="dot dt"></span>SQL</span>
+        <span class="tag"><span class="dot dt"></span>Pandas</span>
+        <span class="tag"><span class="dot dt"></span>Excel</span>
+        <span class="tag"><span class="dot dt"></span>Tableau</span>
+        <span class="tag"><span class="dot dt"></span>Power BI</span>
+      </div>
+    </div>
+    <div>
+      <div class="sg-head">Clinical &amp; EDC Systems</div>
+      <div class="tags">
+        <span class="tag"><span class="dot dc2"></span>Medidata Rave EDC</span>
+        <span class="tag"><span class="dot dc2"></span>Oracle Argus</span>
+        <span class="tag"><span class="dot dc2"></span>REDCap</span>
+        <span class="tag"><span class="dot dc2"></span>ArisGlobal eTMF</span>
+        <span class="tag"><span class="dot dc2"></span>Veeva Vault</span>
+        <span class="tag"><span class="dot dc2"></span>Oracle Clinical</span>
+      </div>
+    </div>
+    <div>
+      <div class="sg-head">Regulatory &amp; Clinical</div>
+      <div class="tags">
+        <span class="tag"><span class="dot dg"></span>ICH-GCP</span>
+        <span class="tag"><span class="dot dg"></span>Patient Recruitment</span>
+        <span class="tag"><span class="dot dg"></span>Informed Consent</span>
+        <span class="tag"><span class="dot dg"></span>AE / SAE Reporting</span>
+        <span class="tag"><span class="dot dg"></span>TMF / ISF Management</span>
+        <span class="tag"><span class="dot dg"></span>IATA Shipping</span>
+        <span class="tag"><span class="dot dg"></span>Data Query Resolution</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECT -->
+<section id="project">
+  <p class="lbl lbl-gold">Capstone · Final Year · Team of 3</p>
+  <h2 class="stitle stitle-lt">HW Dental — Healthcare Marketing Analytics</h2>
+  <div class="rule rule-teal" style="margin-bottom:2rem;"></div>
+
+  <div class="proj-card">
+    <div class="proj-hdr">
+      <div>
+        <h3>Marketing Analytics for a Growing Dental Chain</h3>
+        <p>Analyzing de-identified patient data across four HW Dental branches in Central Ohio to surface demographic patterns, referral channel performance, and actionable marketing opportunities — especially for Medicaid and Spanish-speaking populations.</p>
+      </div>
+      <div class="proj-meta">
+        <span class="pbadge">🏥 Live Client</span>
+        <span class="pbadge">👥 Team of 3</span>
+        <span class="pbadge">📍 Columbus, OH</span>
+        <span class="pbadge">🎓 BUSA 695</span>
+      </div>
+    </div>
+    <div class="proj-body">
+      <div class="proj-cols">
+        <div>
+          <p class="ph4" style="margin-bottom:.8rem;">Project Overview</p>
+          <p style="margin-bottom:1.2rem;">As part of Franklin University's Real-World Project initiative, our <strong style="color:#c4bfb8;">3-person team</strong> partnered with <strong style="color:#c4bfb8;">HW Dental</strong> to perform end-to-end marketing analytics on a live, de-identified dataset from a fast-growing dental practice. I contribute across data cleaning, segmentation, and visualization using Python, SQL, Excel, Tableau, and Power BI.</p>
+
+          <p class="ph4" style="margin-bottom:.8rem;">Key Research Questions</p>
+          <ul style="margin-bottom:1.4rem;">
+            <li><strong>Branch Comparison:</strong> How do Clintonville, Polaris, Sawmill &amp; Westerville differ in patient demographics and insurance mix?</li>
+            <li><strong>Referral Channels:</strong> Which sources (Google, personal, insurance) drive the most patients per branch?</li>
+            <li><strong>Target Populations:</strong> How effectively is the clinic reaching Medicaid recipients and Spanish-speaking patients?</li>
+            <li><strong>Geographic Gaps:</strong> Which Columbus-area ZIP codes remain underserved?</li>
+            <li><strong>Communication Preferences:</strong> How can outreach be tailored by patient segment?</li>
+          </ul>
+
+          <p class="ph4" style="margin-bottom:.7rem;">Tools &amp; Technologies</p>
+          <div class="chips">
+            <span class="chip">🐍 Python</span>
+            <span class="chip">🗄️ SQL</span>
+            <span class="chip">📊 Excel</span>
+            <span class="chip cr">📈 Tableau</span>
+            <span class="chip cr">⚡ Power BI</span>
+          </div>
+        </div>
+
+        <div>
+          <p class="ph4" style="margin-bottom:.7rem;">Dataset at a Glance</p>
+          <div class="dc-grid" style="margin-bottom:1.5rem;">
+            <div class="dcard"><span class="dn">4,546</span><div class="dl">Total new patients · Mar 2025–2026</div></div>
+            <div class="dcard"><span class="dn">21</span><div class="dl">Variables: demographics, referral, insurance, geography</div></div>
+            <div class="dcard"><span class="dn">24%</span><div class="dl">High Spanish Likelihood (name-analysis model)</div></div>
+            <div class="dcard"><span class="dn">73%</span><div class="dl">Patients with a recorded referral source</div></div>
+          </div>
+
+          <p class="ph4" style="margin-bottom:.7rem;">Branch Breakdown</p>
+          <table class="btable">
+            <thead><tr><th>Branch</th><th>Patients</th><th>Share</th></tr></thead>
+            <tbody>
+              <tr><td>Westerville</td><td>1,897</td><td>41.7%</td></tr>
+              <tr><td>Sawmill</td><td>1,486</td><td>32.7%</td></tr>
+              <tr><td>Clintonville</td><td>740</td><td>16.3%</td></tr>
+              <tr><td>Polaris</td><td>423</td><td>9.3%</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRIALS -->
+<section id="trials">
+  <p class="lbl">Clinical Background</p>
+  <h2 class="stitle">Clinical Trial Experience</h2>
+  <div class="rule"></div>
+  <table class="ttable">
+    <thead>
+      <tr><th>Condition</th><th>Therapeutic Area</th><th>Type</th><th>Phase &amp; Role</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Metastatic Colorectal Cancer</td><td>Oncology</td><td>Interventional</td><td><span class="phase">Phase III — CRC</span></td></tr>
+      <tr><td>Age Related Macular Degeneration (Neovascular)</td><td>Ophthalmology</td><td>Interventional</td><td><span class="phase">Phase II — CRC</span></td></tr>
+      <tr><td>IBD — Ulcerative Colitis &amp; Crohn's Disease</td><td>Gastroenterology</td><td>Medical</td><td><span class="phase">Phase IV — CRC</span></td></tr>
+      <tr><td>IBD — Ulcerative Colitis &amp; Crohn's Disease</td><td>Gastroenterology</td><td>Medical</td><td><span class="phase">Phase II — Unblinded Pharmacist</span></td></tr>
+      <tr><td>IBD — Crohn's Disease</td><td>Gastroenterology</td><td>Medical</td><td><span class="phase">Phase II — CRC</span></td></tr>
+      <tr><td>IBD — Ulcerative Colitis</td><td>Gastroenterology</td><td>Medical</td><td><span class="phase">Phase III — CRC</span></td></tr>
+      <tr><td>Idiopathic Constipation</td><td>Gastroenterology</td><td>Medical</td><td><span class="phase">Phase II — CRC</span></td></tr>
+      <tr><td>Gastroesophageal Reflux Disease (GERD)</td><td>Gastroenterology</td><td>Medical</td><td><span class="phase">Phase IV — CRC</span></td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- CERTS -->
+<section id="certs">
+  <p class="lbl">Credentials</p>
+  <h2 class="stitle">Certifications &amp; Training</h2>
+  <div class="rule rule-gold"></div>
+  <div class="certs-grid">
+    <div class="cert"><div class="cert-icon">🏥</div><div><div class="cert-title">Basic Life Support (BLS)</div><div class="cert-org">American BLS — Adult, Child &amp; Infant Resuscitation</div></div></div>
+    <div class="cert"><div class="cert-icon">🧪</div><div><div class="cert-title">Good Clinical Practice (GCP) Training</div><div class="cert-org">NIDA Clinical Trial Network — 6-Hour Online Certification</div></div></div>
+    <div class="cert"><div class="cert-icon">📦</div><div><div class="cert-title">Dangerous Goods / IATA Shipping</div><div class="cert-org">49CFR 172.700 / IATA 1.5 — Category A &amp; B Biological Substances</div></div></div>
+    <div class="cert"><div class="cert-icon">💻</div><div><div class="cert-title">Medidata Rave EDC Certification</div><div class="cert-org">Rave EDC, SIMT &amp; Rave Modules — Medidata Official Training</div></div></div>
+    <div class="cert"><div class="cert-icon">📋</div><div><div class="cert-title">Indian Regulations &amp; GCP Training Program</div><div class="cert-org">Certificate of Participation — Good Clinical Practice</div></div></div>
+    <div class="cert"><div class="cert-icon">🎖️</div><div><div class="cert-title">ISGCON-2023 Volunteer</div><div class="cert-org">Telangana Chapter — Telangana State Medical Council</div></div></div>
+    <div class="cert"><div class="cert-icon">📄</div><div><div class="cert-title">Poster Presentation — AICTE International Conference</div><div class="cert-org">Organophosphorus Nerve Agent Poisoning — ICCTPR-PT 2020, Bhaskar Pharmacy College</div></div></div>
+  </div>
+</section>
+
+<!-- PUBLICATIONS -->
+<section id="pubs">
+  <p class="lbl">Research Output</p>
+  <h2 class="stitle">Peer-Reviewed Publications</h2>
+  <div class="rule"></div>
+  <div class="pub">
+    <div class="pub-title">An Observational Cohort Study on Prescription Pattern of Intravenous Albumin in Different Indications of Liver Disease</div>
+    <div class="pub-jnl">International Journal of Medical Research Professional</div>
+  </div>
+  <div class="pub">
+    <div class="pub-title">An Observational Study on Combination of H₂ Blockers and PPI vs. Monotherapy H₂ Blockers for the Treatment of Gastroesophageal Reflux Disease</div>
+    <div class="pub-jnl">International Journal of Pharmacy and Pharmaceutical Sciences</div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <p class="lbl lbl-gold">Let's Connect</p>
+  <h2 class="stitle stitle-lt">Get in Touch</h2>
+  <div class="rule rule-teal rule-center" style="margin-bottom:1.8rem;"></div>
+  <p>Open to clinical research, health informatics, and healthcare data analytics opportunities in Columbus, OH and beyond.</p>
+  <div class="contact-cards">
+    <a href="tel:+13808957201" class="ccard"><span class="ico">📞</span><div><strong>Phone</strong>+1 380 895 7201</div></a>
+    <a href="mailto:sailipi.gowlikar@gmail.com" class="ccard"><span class="ico">✉️</span><div><strong>Email</strong>sailipi.gowlikar@gmail.com</div></a>
+    <div class="ccard"><span class="ico">📍</span><div><strong>Location</strong>Columbus, Ohio, USA</div></div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  &copy; 2026 Dr. Sailipi Gowlikar &nbsp;·&nbsp; PharmD · MS Health Informatics · Franklin University, Columbus OH
+</footer>
+
+<!-- SPLASH JS -->
+<script>
+(function () {
+  const NAME = "Sailipi Gowlikar";
+  const DELAY_PER_CHAR = 0.072;
+  const nameEl = document.getElementById("splash-name");
+
+  // Split into words → spans with staggered animation
+  let globalIdx = 0;
+  NAME.split(" ").forEach(function (word) {
+    var wordEl = document.createElement("div");
+    wordEl.className = "word";
+    word.split("").forEach(function (ch) {
+      var span = document.createElement("span");
+      span.textContent = ch;
+      span.style.animationDelay = (0.35 + globalIdx * DELAY_PER_CHAR) + "s";
+      span.style.animationDuration = "0.55s";
+      wordEl.appendChild(span);
+      globalIdx++;
+    });
+    nameEl.appendChild(wordEl);
+    globalIdx++; // account for space
+  });
+
+  // Trigger fade-out after 3 s total
+  document.getElementById("splash").classList.add("out");
+})();
+</script>
+</body>
+</html>
